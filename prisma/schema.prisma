@@ -10,3 +10,78 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id           Int       @id @default(autoincrement())
+  first_name   String
+  last_name    String
+  email        String    @unique
+  username     String
+  password     String
+  phone_number String
+  addresses    Address[]
+  orders       Order[]
+}
+
+model Address {
+  id            Int    @id @default(autoincrement())
+  street_number String
+  street_name   String
+  city          String
+  region        String
+  postal_code   String
+  user          User   @relation(fields: [userId], references: [id])
+  userId        Int
+}
+
+model Product {
+  id                Int                 @id @default(autoincrement())
+  name              String
+  price             Float
+  visible           Boolean?            @default(true)
+  times_ordered     Int
+  productCategories ProductCategories[]
+  orders            OrderProducts[]     @ignore
+}
+
+model Category {
+  id                Int                 @id @default(autoincrement())
+  name              String
+  description       String              @default("")
+  productCategories ProductCategories[]
+}
+
+model ProductCategories {
+  product    Product  @relation(fields: [productId], references: [id])
+  productId  Int
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId Int
+
+  @@id([productId, categoryId])
+}
+
+model Order {
+  id              Int             @id @default(autoincrement())
+  customer        User            @relation(fields: [customerId], references: [id])
+  customerId      Int
+  status          String // "new", "confirmed", "preparing", "delivering", "delivered"
+  paymentMethod   PaymentMethod   @relation(fields: [paymentMethodId], references: [id])
+  paymentMethodId Int
+  products        OrderProducts[]
+}
+
+model PaymentMethod {
+  id          Int     @id @default(autoincrement())
+  name        String
+  description String
+  Order       Order[]
+}
+
+model OrderProducts {
+  order     Order   @relation(fields: [orderId], references: [id])
+  orderId   Int
+  product   Product @relation(fields: [productId], references: [id])
+  productId Int
+  amount    Int     @default(1)
+
+  @@id([orderId, productId])
+}
