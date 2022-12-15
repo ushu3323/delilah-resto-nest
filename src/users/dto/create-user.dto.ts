@@ -7,6 +7,8 @@ import {
   Length,
   Matches,
 } from 'class-validator';
+import { IsEmailUnique } from '../decorators/class-validator/IsEmailUnique';
+import { IsUsernameUnique } from '../decorators/class-validator/IsUsernameUnique';
 
 const PASSWORD_REGEX = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).*$/g;
 
@@ -23,11 +25,13 @@ export class CreateUserDto {
 
   @IsNotEmpty()
   @IsEmail()
+  @IsEmailUnique()
   email: string;
 
   @IsNotEmpty()
   @Length(6, 20)
   @IsAlphanumeric()
+  @IsUsernameUnique()
   username: string;
 
   @IsNotEmpty()
