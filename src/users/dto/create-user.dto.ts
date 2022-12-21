@@ -38,7 +38,7 @@ export class CreateUserDto {
   @Length(8, 40)
   @Matches(PASSWORD_REGEX, {
     message:
-      'must contain one lowercase word, one uppercase word and one number',
+      'must contain at least 1 uppercase letter, 1 lowercase letter, and 1 number',
   })
   password: string;
 
