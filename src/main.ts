@@ -2,6 +2,7 @@ import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
 import { HttpAdapterHost, NestFactory, Reflector } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { useContainer } from 'class-validator';
+
 import { AppModule } from './app.module';
 import { exceptionFactory } from './common/utils/exception-factory';
 import { PrismaClientExceptionFilter } from './prisma/exceptions/prisma-client-exception/prisma-client-exception.filter';

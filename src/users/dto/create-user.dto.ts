@@ -7,6 +7,7 @@ import {
   Length,
   Matches,
 } from 'class-validator';
+
 import { IsEmailUnique } from '../decorators/class-validator/IsEmailUnique';
 import { IsUsernameUnique } from '../decorators/class-validator/IsUsernameUnique';
 
